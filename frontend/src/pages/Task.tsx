@@ -1,12 +1,20 @@
-import React, { ReactElement, Fragment, useState } from 'react'
+import React, { ReactElement, Fragment, useState, useContext, useEffect } from 'react'
+import AuthContext from '../context/Auth/AuthContext';
+import AlertContext from '../context/Alert/AletContext';
 
-interface Props {
-
-}
+interface Props { }
 
 function Task({ }: Props): ReactElement {
     const [hover, sethover] = useState(false);
+    const authContext = useContext(AuthContext);
+    const { loadUser, error } = authContext;
+    const alertContext = useContext(AlertContext);
 
+
+    useEffect(() => {
+        loadUser();
+        error && alertContext.setAlert(error, "danger");
+    }, [error]);
     return (
         <Fragment>
             <div className="text-center">

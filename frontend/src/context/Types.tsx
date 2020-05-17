@@ -11,6 +11,11 @@ export const LOGOUT = "LOGOUT";
 export const LOAD_USER = "LOAD_USER";
 export const AUTH_ERROR = "AUTH_ERROR";
 
+export const SETALERT = "SETALERT";
+export const REMOVEALERT = "REMOVEALERT";
+
+
+
 export type Auth = {
     token: any,
     isAutenticated: any,
@@ -19,7 +24,10 @@ export type Auth = {
     user: any,
     loadUser: any;
 };
-
+export type Alert = {
+    alert: [],
+    setAlert: any
+}
 export type User = {
     id: number;
     username: string;

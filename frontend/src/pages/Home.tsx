@@ -3,7 +3,7 @@ import AuthContext from '../context/Auth/AuthContext';
 
 function Home() {
     const authContext = useContext(AuthContext);
-    const { loadUser, error } = authContext;
+    const { error } = authContext;
     const [login, setlogin] = useState(false);
     const [user, setuser] = useState({ username: "", email: "", password: "", password2: "" });
     const { username, email, password, password2 } = user;
@@ -12,10 +12,7 @@ function Home() {
     const onSignInSubmit = (e: any) => { e.preventDefault(); console.log(user); }
 
     useEffect(() => {
-        loadUser();
-        if (error) {
-            console.log(error);
-        };
+        error && console.log(error);
     }, [error]);
 
     const signin = <div>

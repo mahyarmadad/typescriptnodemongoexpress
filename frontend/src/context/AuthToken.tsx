@@ -1,5 +1,5 @@
 import axios from "axios";
-const AuthToken = token => {
+const AuthToken = (token: String) => {
     if (token) {
         axios.defaults.headers.common["x-auth-token"] = token;
     } else {

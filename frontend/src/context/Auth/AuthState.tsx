@@ -1,5 +1,4 @@
-import React, { ReactElement, useContext, useReducer } from 'react'
-
+import React, { useContext, useReducer } from 'react'
 import AuthContext from './AuthContext'
 import AuthReducer from './AuthReducer';
 import { LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_FAILED, REGISTER_SUCCESS, LOAD_USER, LOGOUT, AUTH_ERROR } from '../Types';
