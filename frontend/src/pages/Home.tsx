@@ -1,19 +1,37 @@
-import React, { ReactElement, Fragment, useState, FormEvent, useContext, useEffect } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import AuthContext from '../context/Auth/AuthContext';
+import AlertContext from '../context/Alert/AletContext';
 
-function Home() {
+function Home(props: { history: string[]; }) {
     const authContext = useContext(AuthContext);
-    const { error } = authContext;
+    const alertContext = useContext(AlertContext);
+
+    const { error, isAutenticated, register, clearError } = authContext;
+    const { setAlert } = alertContext;
     const [login, setlogin] = useState(false);
     const [user, setuser] = useState({ username: "", email: "", password: "", password2: "" });
     const { username, email, password, password2 } = user;
 
+
     const onSignInChange = (e: any) => { setuser({ ...user, [e.target.name]: e.target.value }); };
-    const onSignInSubmit = (e: any) => { e.preventDefault(); console.log(user); }
+    const onSignInSubmit = (e: any) => {
+        e.preventDefault();
+        console.log(user);
+    }
+    const onSignUpSubmit = (e: any) => {
+        e.preventDefault();
+        if (password !== password2) {
+            setAlert("Password do not match", "danger");
+        } else {
+            register(user);
+        }
+    }
 
     useEffect(() => {
-        error && console.log(error);
-    }, [error]);
+        isAutenticated && props.history.push("/task");
+        error && setAlert(error, "danger"); clearError();
+
+    }, [error, isAutenticated]);
 
     const signin = <div>
         <form className="form-signin" onSubmit={onSignInSubmit}>
@@ -24,7 +42,7 @@ function Home() {
         <p id="logintxt">Don't have an Account , Want to <button className="btn-link" onClick={() => setlogin(false)}>Register</button></p>
     </div>;
     const signup = <div>
-        <form className="form-signup" onSubmit={onSignInSubmit}>
+        <form className="form-signup" onSubmit={onSignUpSubmit}>
             <input type="text" name="username" value={username} onChange={onSignInChange} className="form-control" placeholder="Username" required />
             <input type="email" name="email" value={email} onChange={onSignInChange} className="form-control" placeholder="Email address" required />
             <input type="password" name="password" value={password} onChange={onSignInChange} className="form-control" placeholder="Password" required />

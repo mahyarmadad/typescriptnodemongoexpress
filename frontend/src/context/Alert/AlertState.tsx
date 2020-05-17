@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useReducer } from 'react'
+import React, { ReactElement, useReducer } from 'react'
 import AlertContext from './AletContext'
 import { SETALERT, REMOVEALERT } from "../Types";
 import AlertReducer from './AlertReducer';

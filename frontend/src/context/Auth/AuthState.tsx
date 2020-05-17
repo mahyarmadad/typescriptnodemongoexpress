@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from 'react'
 import AuthContext from './AuthContext'
 import AuthReducer from './AuthReducer';
-import { LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_FAILED, REGISTER_SUCCESS, LOAD_USER, LOGOUT, AUTH_ERROR } from '../Types';
+import { LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_FAILED, REGISTER_SUCCESS, LOAD_USER, LOGOUT, AUTH_ERROR, CLEARERROR } from '../Types';
 import axios from "axios";
 import AuthToken from '../AuthToken';
 interface Props { }
@@ -31,14 +31,34 @@ function AuthState(props: { children: React.ReactNode; }) {
     };
 
     // Login User
+    const login = async () => {
+
+    }
     // LOGIN_SUCCESS
     // LOGIN_FAILED
     // Register User
-    // REGISTER_FAILED
-    // REGISTER_SUCCESS
+    const register = async (data: any) => {
+        try {
+            const res = await axios.post("/api/users", data);
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data.token
+            });
+            console.log(res.data);
+            loadUser();
+        } catch (error) {
+            dispatch({
+                type: REGISTER_FAILED,
+                payload: error.response.data.msg || error.response.data.errors.map((e: any) => e.msg)
+            });
+        }
+
+    }
+
     // Logout
     // LOGOUT
-
+    // Clear Error
+    const clearError = () => dispatch({ type: CLEARERROR });
     return (
         <AuthContext.Provider value={{
             token: state.token,
@@ -46,7 +66,9 @@ function AuthState(props: { children: React.ReactNode; }) {
             loading: state.loading,
             error: state.error,
             user: state.user,
-            loadUser
+            loadUser,
+            register,
+            clearError,
         }}>
             {props.children}
         </AuthContext.Provider>

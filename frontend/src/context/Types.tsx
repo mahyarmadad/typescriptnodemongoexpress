@@ -13,6 +13,8 @@ export const AUTH_ERROR = "AUTH_ERROR";
 
 export const SETALERT = "SETALERT";
 export const REMOVEALERT = "REMOVEALERT";
+export const CLEARERROR = "CLEARERROR";
+
 
 
 
@@ -23,6 +25,8 @@ export type Auth = {
     error: any,
     user: any,
     loadUser: any;
+    register: any;
+    clearError: any;
 };
 export type Alert = {
     alert: [],
